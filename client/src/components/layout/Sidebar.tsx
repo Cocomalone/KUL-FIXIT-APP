@@ -69,7 +69,7 @@ export function Sidebar() {
             maxWidth: 180,
             height: 'auto',
             objectFit: 'contain',
-            filter: 'invert(1)',
+            /* White logo on dark sidebar — no filter needed */
             marginBottom: 'var(--space-2)',
           }}
         />
