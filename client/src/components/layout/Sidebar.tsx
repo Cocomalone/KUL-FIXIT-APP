@@ -62,28 +62,46 @@ export function Sidebar() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+          <img
+            src="/logo.png"
+            alt="KUL FYX"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 'var(--radius-md)',
+              objectFit: 'contain',
+            }}
+            onError={(e) => {
+              // Fallback if logo not found — show gold KF badge
+              const target = e.currentTarget;
+              target.style.display = 'none';
+              const fallback = target.nextElementSibling as HTMLElement;
+              if (fallback) fallback.style.display = 'flex';
+            }}
+          />
           <div
             style={{
-              width: 32,
-              height: 32,
+              width: 36,
+              height: 36,
               borderRadius: 'var(--radius-md)',
               backgroundColor: 'var(--color-primary)',
-              display: 'flex',
+              display: 'none',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff',
+              color: '#111',
               fontWeight: 700,
               fontSize: 'var(--font-size-sm)',
+              flexShrink: 0,
             }}
           >
-            FT
+            KF
           </div>
           <div>
-            <div style={{ color: 'var(--color-sidebar-text)', fontWeight: 600, fontSize: 'var(--font-size-sm)', lineHeight: 1.2 }}>
-              Factory
+            <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: 'var(--font-size-sm)', lineHeight: 1.2, letterSpacing: '0.05em' }}>
+              KUL FYX
             </div>
             <div style={{ color: 'var(--color-sidebar-text-muted)', fontSize: 'var(--font-size-xs)', lineHeight: 1.2 }}>
-              Troubleshoot
+              Equipment Troubleshoot
             </div>
           </div>
         </div>
@@ -139,7 +157,7 @@ export function Sidebar() {
           fontSize: 'var(--font-size-xs)',
         }}
       >
-        Factory Troubleshoot v1.0
+        KUL FYX v1.0
       </div>
     </aside>
   );

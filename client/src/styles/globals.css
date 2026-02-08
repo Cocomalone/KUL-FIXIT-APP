@@ -1,31 +1,31 @@
-/* Claude-inspired design tokens */
+/* KUL FYX — Dark + Gold Premium Theme */
 :root {
-  /* Colors */
-  --color-bg: #FAF9F7;
-  --color-bg-secondary: #F5F3F0;
-  --color-surface: #FFFFFF;
-  --color-surface-hover: #F8F7F5;
-  --color-sidebar: #2F2F2E;
-  --color-sidebar-hover: #3A3A39;
-  --color-sidebar-active: #454544;
+  /* Colors — Dark backgrounds */
+  --color-bg: #1A1A1A;
+  --color-bg-secondary: #222222;
+  --color-surface: #2A2A2A;
+  --color-surface-hover: #333333;
+  --color-sidebar: #111111;
+  --color-sidebar-hover: #1E1E1E;
+  --color-sidebar-active: #252525;
   --color-sidebar-text: #E8E5E0;
-  --color-sidebar-text-muted: #9B9893;
-  --color-primary: #D97757;
-  --color-primary-hover: #C4684A;
-  --color-primary-light: #FDF0EB;
-  --color-text: #2D2D2A;
-  --color-text-secondary: #6B6966;
-  --color-text-muted: #9B9893;
-  --color-border: #E8E5E0;
-  --color-border-light: #F0EEEB;
+  --color-sidebar-text-muted: #777777;
+  --color-primary: #D4A843;
+  --color-primary-hover: #C49A38;
+  --color-primary-light: #2A2518;
+  --color-text: #E8E5E0;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #666666;
+  --color-border: #3A3A3A;
+  --color-border-light: #2F2F2F;
   --color-success: #10B981;
-  --color-success-light: #ECFDF5;
+  --color-success-light: #0D2818;
   --color-warning: #F59E0B;
-  --color-warning-light: #FFFBEB;
+  --color-warning-light: #2A2008;
   --color-danger: #EF4444;
-  --color-danger-light: #FEF2F2;
+  --color-danger-light: #2A1010;
   --color-info: #3B82F6;
-  --color-info-light: #EFF6FF;
+  --color-info-light: #0D1A2A;
 
   /* Severity badge colors */
   --severity-low: #10B981;
@@ -76,10 +76,10 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -149,8 +149,8 @@ input, textarea, select {
 
 /* Mark tag styling for search highlights */
 mark {
-  background-color: var(--color-primary-light);
-  color: var(--color-text);
+  background-color: rgba(212, 168, 67, 0.3);
+  color: var(--color-primary);
   padding: 0 2px;
   border-radius: 2px;
 }

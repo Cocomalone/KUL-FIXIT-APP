@@ -33,10 +33,10 @@ export function Badge({ children, color, bg, size = 'sm', style }: BadgeProps) {
 
 export function SeverityBadge({ severity }: { severity: string }) {
   const config: Record<string, { color: string; bg: string }> = {
-    low: { color: '#065F46', bg: 'var(--color-success-light)' },
-    medium: { color: '#92400E', bg: 'var(--color-warning-light)' },
-    high: { color: '#9A3412', bg: '#FFF7ED' },
-    critical: { color: '#991B1B', bg: 'var(--color-danger-light)' },
+    low: { color: '#34D399', bg: 'var(--color-success-light)' },
+    medium: { color: '#FBBF24', bg: 'var(--color-warning-light)' },
+    high: { color: '#FB923C', bg: 'rgba(249, 115, 22, 0.15)' },
+    critical: { color: '#F87171', bg: 'var(--color-danger-light)' },
   };
   const c = config[severity] || config.medium;
   return <Badge color={c.color} bg={c.bg}>{severity}</Badge>;
@@ -48,7 +48,7 @@ export function FrequencyBadge({ count }: { count: number }) {
   const config = {
     hot: { color: '#fff', bg: 'var(--freq-hot)', label: 'Frequent' },
     warm: { color: '#fff', bg: 'var(--freq-warm)', label: 'Recurring' },
-    mild: { color: '#92400E', bg: 'var(--color-warning-light)', label: 'Watch' },
+    mild: { color: '#FBBF24', bg: 'var(--color-warning-light)', label: 'Watch' },
   };
   const c = config[level];
   return (

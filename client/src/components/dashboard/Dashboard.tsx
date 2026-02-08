@@ -6,7 +6,7 @@ import { TopIssues } from './TopIssues';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import * as api from '../../services/api';
 
-const COLORS = ['#D97757', '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#6366F1', '#14B8A6', '#EF4444', '#F97316'];
+const COLORS = ['#D4A843', '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#6366F1', '#14B8A6', '#EF4444', '#F97316'];
 
 export function DashboardPage() {
   const [stats, setStats] = useState<any>(null);
@@ -33,7 +33,7 @@ export function DashboardPage() {
   const statCards = [
     { label: 'Total Entries', value: stats?.total_entries || 0, color: 'var(--color-primary)' },
     { label: 'Equipment', value: stats?.total_equipment || 0, color: 'var(--color-info)' },
-    { label: 'Topics', value: stats?.total_topics || 0, color: '#8B5CF6' },
+    { label: 'Topics', value: stats?.total_topics || 0, color: '#A78BFA' },
     { label: 'This Month', value: stats?.entries_this_month || 0, color: 'var(--color-success)' },
     { label: 'Occurrences', value: stats?.total_occurrences || 0, color: 'var(--color-warning)' },
   ];
@@ -83,7 +83,7 @@ export function DashboardPage() {
           <TrendChart
             data={trends?.occurrenceTrend || []}
             title="Occurrences Over Time"
-            color="#D97757"
+            color="#D4A843"
           />
         </Card>
         <Card>
@@ -109,9 +109,9 @@ export function DashboardPage() {
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={trends?.equipmentBreakdown || []} layout="vertical">
-                <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={100} />
-                <Tooltip />
+                <XAxis type="number" tick={{ fontSize: 11, fill: '#A0A0A0' }} allowDecimals={false} />
+                <YAxis dataKey="name" type="category" tick={{ fontSize: 11, fill: '#A0A0A0' }} width={100} />
+                <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
                 <Bar dataKey="count" radius={[0, 4, 4, 0]}>
                   {(trends?.equipmentBreakdown || []).map((_: any, i: number) => (
                     <Cell key={i} fill={COLORS[i % COLORS.length]} />
@@ -134,9 +134,9 @@ export function DashboardPage() {
           ) : (
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={trends?.topicBreakdown || []} layout="vertical">
-                <XAxis type="number" tick={{ fontSize: 11 }} allowDecimals={false} />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 11 }} width={100} />
-                <Tooltip />
+                <XAxis type="number" tick={{ fontSize: 11, fill: '#A0A0A0' }} allowDecimals={false} />
+                <YAxis dataKey="name" type="category" tick={{ fontSize: 11, fill: '#A0A0A0' }} width={100} />
+                <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
                 <Bar dataKey="count" radius={[0, 4, 4, 0]}>
                   {(trends?.topicBreakdown || []).map((item: any, i: number) => (
                     <Cell key={i} fill={item.color || COLORS[i % COLORS.length]} />

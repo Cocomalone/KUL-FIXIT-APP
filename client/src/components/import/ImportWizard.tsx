@@ -105,7 +105,7 @@ export function ImportWizard() {
                 height: 28,
                 borderRadius: 'var(--radius-full)',
                 backgroundColor: i <= currentIdx ? 'var(--color-primary)' : 'var(--color-border)',
-                color: i <= currentIdx ? '#fff' : 'var(--color-text-muted)',
+                color: i <= currentIdx ? '#111' : 'var(--color-text-muted)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -136,7 +136,7 @@ export function ImportWizard() {
           style={{
             padding: 'var(--space-3) var(--space-4)',
             backgroundColor: 'var(--color-danger-light)',
-            color: '#991B1B',
+            color: '#F87171',
             borderRadius: 'var(--radius-md)',
             fontSize: 'var(--font-size-sm)',
             marginBottom: 'var(--space-5)',

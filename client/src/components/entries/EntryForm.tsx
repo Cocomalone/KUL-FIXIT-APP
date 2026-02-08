@@ -105,7 +105,7 @@ export function EntryForm() {
               style={{
                 padding: 'var(--space-3) var(--space-4)',
                 backgroundColor: 'var(--color-danger-light)',
-                color: '#991B1B',
+                color: '#F87171',
                 borderRadius: 'var(--radius-md)',
                 fontSize: 'var(--font-size-sm)',
               }}

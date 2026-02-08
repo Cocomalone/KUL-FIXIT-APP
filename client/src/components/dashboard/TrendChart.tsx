@@ -7,7 +7,7 @@ interface TrendChartProps {
   color?: string;
 }
 
-export function TrendChart({ data, title, color = '#D97757' }: TrendChartProps) {
+export function TrendChart({ data, title, color = '#D4A843' }: TrendChartProps) {
   const formattedData = data.map((d) => ({
     ...d,
     date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),

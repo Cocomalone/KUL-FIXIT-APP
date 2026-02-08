@@ -21,7 +21,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   primary: {
     backgroundColor: 'var(--color-primary)',
-    color: '#fff',
+    color: '#111111',
   },
   secondary: {
     backgroundColor: 'var(--color-surface)',

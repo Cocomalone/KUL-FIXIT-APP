@@ -14,7 +14,7 @@ export function EquipmentPage() {
   const [showEqModal, setShowEqModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
   const [eqForm, setEqForm] = useState({ name: '', model: '', manufacturer: '', category: '' });
-  const [topicForm, setTopicForm] = useState({ name: '', description: '', color: '#6B7280' });
+  const [topicForm, setTopicForm] = useState({ name: '', description: '', color: '#A0A0A0' });
   const [tab, setTab] = useState<'equipment' | 'topics'>('equipment');
 
   const loadData = async () => {
@@ -43,7 +43,7 @@ export function EquipmentPage() {
   const handleAddTopic = async () => {
     if (!topicForm.name) return;
     await api.createTopic(topicForm);
-    setTopicForm({ name: '', description: '', color: '#6B7280' });
+    setTopicForm({ name: '', description: '', color: '#A0A0A0' });
     setShowTopicModal(false);
     loadData();
   };
