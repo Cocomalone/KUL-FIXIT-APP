@@ -57,53 +57,24 @@ export function Sidebar() {
       {/* Logo */}
       <div
         style={{
-          padding: 'var(--space-6) var(--space-5)',
+          padding: 'var(--space-5) var(--space-5)',
           borderBottom: '1px solid rgba(255,255,255,0.08)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-          <img
-            src="/logo.png"
-            alt="KUL FYX"
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: 'var(--radius-md)',
-              objectFit: 'contain',
-            }}
-            onError={(e) => {
-              // Fallback if logo not found — show gold KF badge
-              const target = e.currentTarget;
-              target.style.display = 'none';
-              const fallback = target.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = 'flex';
-            }}
-          />
-          <div
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--color-primary)',
-              display: 'none',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#111',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-sm)',
-              flexShrink: 0,
-            }}
-          >
-            KF
-          </div>
-          <div>
-            <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: 'var(--font-size-sm)', lineHeight: 1.2, letterSpacing: '0.05em' }}>
-              KUL FYX
-            </div>
-            <div style={{ color: 'var(--color-sidebar-text-muted)', fontSize: 'var(--font-size-xs)', lineHeight: 1.2 }}>
-              Equipment Troubleshoot
-            </div>
-          </div>
+        <img
+          src="/Kul-Horizontal-Logo-Black@0.25x.png"
+          alt="K'UL Chocolate"
+          style={{
+            width: '100%',
+            maxWidth: 180,
+            height: 'auto',
+            objectFit: 'contain',
+            filter: 'invert(1)',
+            marginBottom: 'var(--space-2)',
+          }}
+        />
+        <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: 'var(--font-size-sm)', letterSpacing: '0.08em' }}>
+          KUL FYX
         </div>
       </div>
 
