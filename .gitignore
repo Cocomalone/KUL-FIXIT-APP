@@ -1,0 +1,11 @@
+node_modules/
+dist/
+server/dist/
+client/dist/
+server/data/
+uploads/
+*.db
+.env
+.env.local
+.DS_Store
+PLAN.md
