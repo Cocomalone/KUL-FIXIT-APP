@@ -73,9 +73,6 @@ export function Sidebar() {
             marginBottom: 'var(--space-2)',
           }}
         />
-        <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: 'var(--font-size-sm)', letterSpacing: '0.08em' }}>
-          KUL FYX
-        </div>
       </div>
 
       {/* Navigation */}
