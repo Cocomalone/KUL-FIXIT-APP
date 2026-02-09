@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -8,6 +9,7 @@ import { Header } from '../layout/Header';
 import * as api from '../../services/api';
 
 export function EquipmentPage() {
+  const navigate = useNavigate();
   const [equipment, setEquipment] = useState<any[]>([]);
   const [topics, setTopics] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,7 +92,12 @@ export function EquipmentPage() {
       ) : tab === 'equipment' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
           {equipment.map((eq) => (
-            <Card key={eq.id} padding="var(--space-5)">
+            <Card
+              key={eq.id}
+              padding="var(--space-5)"
+              hover
+              onClick={() => navigate(`/browse?equipment_id=${eq.id}`)}
+            >
               <div style={{ fontWeight: 600, marginBottom: 'var(--space-1)' }}>{eq.name}</div>
               {eq.model && <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Model: {eq.model}</div>}
               {eq.manufacturer && <div style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>Mfr: {eq.manufacturer}</div>}
@@ -109,7 +116,12 @@ export function EquipmentPage() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
           {topics.map((tp) => (
-            <Card key={tp.id} padding="var(--space-5)">
+            <Card
+              key={tp.id}
+              padding="var(--space-5)"
+              hover
+              onClick={() => navigate(`/browse?topic_id=${tp.id}`)}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
                 <div style={{ width: 12, height: 12, borderRadius: 'var(--radius-full)', backgroundColor: tp.color }} />
                 <span style={{ fontWeight: 600 }}>{tp.name}</span>

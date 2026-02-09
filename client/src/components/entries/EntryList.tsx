@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ResultCard } from '../search/ResultCard';
 import { SearchFilters, defaultFilters } from '../search/SearchFilters';
 import { Button } from '../ui/Button';
@@ -8,12 +8,20 @@ import * as api from '../../services/api';
 
 export function BrowsePage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [entries, setEntries] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState(defaultFilters);
+
+  // Pre-populate filters from URL query params (e.g. /browse?equipment_id=3)
+  const initialFilters = {
+    ...defaultFilters,
+    equipment_id: searchParams.get('equipment_id') || '',
+    topic_id: searchParams.get('topic_id') || '',
+  };
+  const [filters, setFilters] = useState(initialFilters);
 
   const loadEntries = async (p: number, f = filters) => {
     setLoading(true);
@@ -36,7 +44,7 @@ export function BrowsePage() {
   };
 
   useEffect(() => {
-    loadEntries(1);
+    loadEntries(1, filters);
   }, []);
 
   useEffect(() => {

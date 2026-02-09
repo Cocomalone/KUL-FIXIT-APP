@@ -29,7 +29,7 @@ export const defaultFilters: Filters = {
 export function SearchFilters({ filters, onChange, onReset }: SearchFiltersProps) {
   const [equipment, setEquipment] = useState<any[]>([]);
   const [topics, setTopics] = useState<any[]>([]);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(Object.values(filters).some((v) => v !== ''));
 
   useEffect(() => {
     api.getEquipment().then(setEquipment).catch(() => {});
