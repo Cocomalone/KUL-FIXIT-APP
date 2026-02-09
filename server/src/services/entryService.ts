@@ -21,6 +21,8 @@ export async function getAllEntries(options: {
   topic_id?: number;
   severity?: string;
   repair_type?: string;
+  date_from?: string;
+  date_to?: string;
   sort_by?: string;
   sort_order?: string;
 }) {
@@ -46,6 +48,14 @@ export async function getAllEntries(options: {
   if (options.repair_type) {
     where += ' AND e.repair_type = ?';
     params.push(options.repair_type);
+  }
+  if (options.date_from) {
+    where += ' AND e.date_reported >= ?';
+    params.push(options.date_from);
+  }
+  if (options.date_to) {
+    where += ' AND e.date_reported <= ?';
+    params.push(options.date_to);
   }
 
   const sortColumn = options.sort_by || 'e.updated_at';

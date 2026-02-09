@@ -30,6 +30,8 @@ export function BrowsePage() {
       if (f.equipment_id) params.equipment_id = f.equipment_id;
       if (f.topic_id) params.topic_id = f.topic_id;
       if (f.severity) params.severity = f.severity;
+      if (f.date_from) params.date_from = f.date_from;
+      if (f.date_to) params.date_to = f.date_to;
 
       const data = await api.getEntries(params);
       setEntries(data.entries || []);

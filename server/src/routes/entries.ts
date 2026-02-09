@@ -12,6 +12,8 @@ router.get('/', async (req: Request, res: Response) => {
       topic_id: req.query.topic_id ? parseInt(req.query.topic_id as string) : undefined,
       severity: req.query.severity as string | undefined,
       repair_type: req.query.repair_type as string | undefined,
+      date_from: req.query.date_from as string | undefined,
+      date_to: req.query.date_to as string | undefined,
       sort_by: req.query.sort_by as string | undefined,
       sort_order: req.query.sort_order as string | undefined,
     };
