@@ -5,12 +5,16 @@ interface TrendChartProps {
   data: { date: string; count: number }[];
   title: string;
   color?: string;
+  dateKey?: string;
+  formatDate?: (date: string) => string;
 }
 
-export function TrendChart({ data, title, color = '#D4A843' }: TrendChartProps) {
+export function TrendChart({ data, title, color = '#D4A843', dateKey = 'date', formatDate }: TrendChartProps) {
   const formattedData = data.map((d) => ({
     ...d,
-    date: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    label: formatDate
+      ? formatDate((d as any)[dateKey] || d.date)
+      : new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
   }));
 
   return (
@@ -27,10 +31,11 @@ export function TrendChart({ data, title, color = '#D4A843' }: TrendChartProps) 
           <AreaChart data={formattedData}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
             <XAxis
-              dataKey="date"
-              tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
+              dataKey="label"
+              tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
               tickLine={false}
               axisLine={{ stroke: 'var(--color-border)' }}
+              interval="preserveStartEnd"
             />
             <YAxis
               tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}

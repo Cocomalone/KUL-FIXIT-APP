@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Badge, FrequencyBadge } from '../ui/Badge';
-import { TrendIndicator } from './FrequencyBadge';
+import { Badge, SeverityBadge } from '../ui/Badge';
 
 interface TopIssuesProps {
   issues: any[];
@@ -13,7 +12,7 @@ export function TopIssues({ issues }: TopIssuesProps) {
   if (issues.length === 0) {
     return (
       <div style={{ padding: 'var(--space-8)', textAlign: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
-        No recurring issues detected yet. Log occurrences on entries to track frequency.
+        No critical or high severity issues found.
       </div>
     );
   }
@@ -60,7 +59,7 @@ export function TopIssues({ issues }: TopIssuesProps) {
             <div style={{ fontWeight: 500, fontSize: 'var(--font-size-sm)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {issue.title}
             </div>
-            <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: '2px' }}>
+            <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: '2px', alignItems: 'center' }}>
               {issue.equipment_name !== 'Unassigned' && (
                 <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)' }}>
                   {issue.equipment_name}
@@ -74,10 +73,14 @@ export function TopIssues({ issues }: TopIssuesProps) {
             </div>
           </div>
 
-          {/* Count & Trend */}
+          {/* Severity Badge + Date */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexShrink: 0 }}>
-            <FrequencyBadge count={issue.occurrence_count} />
-            <TrendIndicator trend={issue.trend} />
+            {issue.date_reported && (
+              <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)' }}>
+                {new Date(issue.date_reported).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </span>
+            )}
+            <SeverityBadge severity={issue.severity} />
           </div>
         </div>
       ))}
