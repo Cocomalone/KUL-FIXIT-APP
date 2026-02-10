@@ -66,9 +66,10 @@ export async function getTrends(_days?: number) {
     ORDER BY month
   `);
 
-  // Equipment breakdown - all entries
+  // Equipment breakdown - all entries (include id for click navigation)
   const equipmentBreakdown = await queryAll(`
     SELECT
+      eq.id as id,
       COALESCE(eq.name, 'Unassigned') as name,
       COUNT(*)::int as count
     FROM entries e
@@ -77,9 +78,10 @@ export async function getTrends(_days?: number) {
     ORDER BY count DESC
   `);
 
-  // Topic breakdown - all entries
+  // Topic breakdown - all entries (include id for click navigation)
   const topicBreakdown = await queryAll(`
     SELECT
+      t.id as id,
       COALESCE(t.name, 'Uncategorized') as name,
       t.color,
       COUNT(*)::int as count
@@ -108,4 +110,51 @@ export async function getTrends(_days?: number) {
     topicBreakdown,
     severityBreakdown,
   };
+}
+
+export async function getFilteredTimeline(filters: {
+  equipment_id?: number;
+  topic_id?: number;
+  severity?: string;
+  date_from?: string;
+  date_to?: string;
+}) {
+  const conditions: string[] = ['date_reported IS NOT NULL'];
+  const params: any[] = [];
+  let paramIndex = 1;
+
+  if (filters.equipment_id) {
+    conditions.push(`e.equipment_id = $${paramIndex++}`);
+    params.push(filters.equipment_id);
+  }
+  if (filters.topic_id) {
+    conditions.push(`e.topic_id = $${paramIndex++}`);
+    params.push(filters.topic_id);
+  }
+  if (filters.severity) {
+    conditions.push(`e.severity = $${paramIndex++}`);
+    params.push(filters.severity);
+  }
+  if (filters.date_from) {
+    conditions.push(`e.date_reported >= $${paramIndex++}`);
+    params.push(filters.date_from);
+  }
+  if (filters.date_to) {
+    conditions.push(`e.date_reported <= $${paramIndex++}`);
+    params.push(filters.date_to);
+  }
+
+  const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+
+  const rows = await queryAll(`
+    SELECT
+      EXTRACT(YEAR FROM e.date_reported)::int as year,
+      COUNT(*)::int as count
+    FROM entries e
+    ${where}
+    GROUP BY EXTRACT(YEAR FROM e.date_reported)
+    ORDER BY year
+  `, params);
+
+  return rows;
 }

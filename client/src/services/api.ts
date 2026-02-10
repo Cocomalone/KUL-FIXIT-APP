@@ -50,6 +50,10 @@ export const getFrequentIssues = (limit?: number) =>
   request<any>(`/dashboard/frequent${limit ? `?limit=${limit}` : ''}`);
 export const getTrends = (days?: number) =>
   request<any>(`/dashboard/trends${days ? `?days=${days}` : ''}`);
+export const getFilteredTimeline = (params: Record<string, string>) => {
+  const qs = new URLSearchParams(params).toString();
+  return request<any[]>(`/dashboard/timeline?${qs}`);
+};
 
 // Equipment
 export const getEquipment = () => request<any[]>('/equipment');
@@ -58,3 +62,11 @@ export const createEquipment = (data: any) => request<any>('/equipment', { metho
 // Topics
 export const getTopics = () => request<any[]>('/topics');
 export const createTopic = (data: any) => request<any>('/topics', { method: 'POST', body: JSON.stringify(data) });
+
+// Auth
+export const login = (password: string) =>
+  request<{ success: boolean }>('/auth/login', { method: 'POST', body: JSON.stringify({ password }) });
+export const checkAuth = () =>
+  request<{ authenticated: boolean }>('/auth/check');
+export const logout = () =>
+  request<{ success: boolean }>('/auth/logout', { method: 'POST' });

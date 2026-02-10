@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import * as api from '../../services/api';
 
 const navItems = [
   { path: '/', label: 'Search', icon: 'search' },
@@ -17,6 +18,7 @@ const icons: Record<string, string> = {
   upload: 'M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4',
   chart: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6m6 0h6m-6 0V9a2 2 0 012-2h2a2 2 0 012 2v10m6 0v-4a2 2 0 00-2-2h-2a2 2 0 00-2 2v4',
   wrench: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+  logout: 'M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9',
 };
 
 function Icon({ name, size = 18 }: { name: string; size?: number }) {
@@ -36,7 +38,11 @@ function Icon({ name, size = 18 }: { name: string; size?: number }) {
   );
 }
 
-export function Sidebar() {
+interface SidebarProps {
+  onLogout?: () => void;
+}
+
+export function Sidebar({ onLogout }: SidebarProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -119,13 +125,51 @@ export function Sidebar() {
       {/* Footer */}
       <div
         style={{
-          padding: 'var(--space-4) var(--space-5)',
+          padding: 'var(--space-3) var(--space-3)',
           borderTop: '1px solid rgba(255,255,255,0.08)',
-          color: 'var(--color-sidebar-text-muted)',
-          fontSize: 'var(--font-size-xs)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
       >
-        KUL FYX v1.0
+        <span style={{ color: 'var(--color-sidebar-text-muted)', fontSize: 'var(--font-size-xs)', paddingLeft: 'var(--space-2)' }}>
+          KUL FYX v1.0
+        </span>
+        {onLogout && (
+          <button
+            onClick={async () => {
+              try {
+                await api.logout();
+              } catch (e) { /* ignore */ }
+              onLogout();
+            }}
+            title="Sign out"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              padding: 'var(--space-2) var(--space-3)',
+              border: 'none',
+              borderRadius: 'var(--radius-md)',
+              backgroundColor: 'transparent',
+              color: 'var(--color-sidebar-text-muted)',
+              fontSize: 'var(--font-size-xs)',
+              cursor: 'pointer',
+              transition: 'all var(--transition-fast)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'var(--color-sidebar-hover)';
+              e.currentTarget.style.color = 'var(--color-sidebar-text)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = 'var(--color-sidebar-text-muted)';
+            }}
+          >
+            <Icon name="logout" size={14} />
+            Sign out
+          </button>
+        )}
       </div>
     </aside>
   );

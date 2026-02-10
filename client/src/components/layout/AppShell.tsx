@@ -2,10 +2,14 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 
-export function AppShell() {
+interface AppShellProps {
+  onLogout?: () => void;
+}
+
+export function AppShell({ onLogout }: AppShellProps) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Sidebar />
+      <Sidebar onLogout={onLogout} />
       <main
         style={{
           flex: 1,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../ui/Card';
 import { Header } from '../layout/Header';
 import { TrendChart } from './TrendChart';
@@ -16,6 +17,7 @@ const SEVERITY_COLORS: Record<string, string> = {
 };
 
 export function DashboardPage() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState<any>(null);
   const [frequent, setFrequent] = useState<any[]>([]);
   const [trends, setTrends] = useState<any>(null);
@@ -61,6 +63,31 @@ export function DashboardPage() {
     count: d.count,
   }));
 
+  // Click handlers for navigating from chart bars to filtered Browse page
+  const handleYearClick = (data: any) => {
+    if (data?.name) {
+      navigate(`/browse?date_from=${data.name}-01-01&date_to=${data.name}-12-31&label=${data.name}`);
+    }
+  };
+
+  const handleSeverityClick = (data: any) => {
+    if (data?.name) {
+      navigate(`/browse?severity=${data.name}&label=${data.name}`);
+    }
+  };
+
+  const handleEquipmentClick = (data: any) => {
+    if (data?.id) {
+      navigate(`/browse?equipment_id=${data.id}&label=${encodeURIComponent(data.name)}`);
+    }
+  };
+
+  const handleTopicClick = (data: any) => {
+    if (data?.id) {
+      navigate(`/browse?topic_id=${data.id}&label=${encodeURIComponent(data.name)}`);
+    }
+  };
+
   return (
     <div>
       <Header
@@ -104,9 +131,10 @@ export function DashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)', marginBottom: 'var(--space-6)' }}>
         {/* Issues by Year - Bar Chart */}
         <Card>
-          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>
+          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-1)' }}>
             Issues Reported by Year
           </h4>
+          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)' }}>Click a bar to view entries</p>
           {yearlyData.length === 0 ? (
             <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
               No data yet
@@ -117,9 +145,9 @@ export function DashboardPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#A0A0A0' }} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#A0A0A0' }} tickLine={false} axisLine={false} allowDecimals={false} />
                 <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
-                <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                <Bar dataKey="count" radius={[4, 4, 0, 0]} onClick={handleYearClick} style={{ cursor: 'pointer' }}>
                   {yearlyData.map((_: any, i: number) => (
-                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                    <Cell key={i} fill={COLORS[i % COLORS.length]} cursor="pointer" />
                   ))}
                 </Bar>
               </BarChart>
@@ -147,9 +175,10 @@ export function DashboardPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--space-6)', marginBottom: 'var(--space-6)' }}>
         {/* Severity Breakdown */}
         <Card>
-          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>
+          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-1)' }}>
             By Severity
           </h4>
+          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)' }}>Click a bar to view entries</p>
           {(trends?.severityBreakdown || []).length === 0 ? (
             <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
               No data yet
@@ -160,9 +189,9 @@ export function DashboardPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#A0A0A0' }} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#A0A0A0' }} tickLine={false} axisLine={false} allowDecimals={false} />
                 <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
-                <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                <Bar dataKey="count" radius={[4, 4, 0, 0]} onClick={handleSeverityClick} style={{ cursor: 'pointer' }}>
                   {(trends?.severityBreakdown || []).map((item: any, i: number) => (
-                    <Cell key={i} fill={SEVERITY_COLORS[item.name] || COLORS[i % COLORS.length]} />
+                    <Cell key={i} fill={SEVERITY_COLORS[item.name] || COLORS[i % COLORS.length]} cursor="pointer" />
                   ))}
                 </Bar>
               </BarChart>
@@ -172,9 +201,10 @@ export function DashboardPage() {
 
         {/* Equipment Breakdown */}
         <Card>
-          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>
+          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-1)' }}>
             By Equipment
           </h4>
+          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)' }}>Click a bar to view entries</p>
           {(trends?.equipmentBreakdown || []).length === 0 ? (
             <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
               No data yet
@@ -185,9 +215,9 @@ export function DashboardPage() {
                 <XAxis type="number" tick={{ fontSize: 11, fill: '#A0A0A0' }} allowDecimals={false} />
                 <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: '#A0A0A0' }} width={110} />
                 <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
-                <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                <Bar dataKey="count" radius={[0, 4, 4, 0]} onClick={handleEquipmentClick} style={{ cursor: 'pointer' }}>
                   {(trends?.equipmentBreakdown || []).map((_: any, i: number) => (
-                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                    <Cell key={i} fill={COLORS[i % COLORS.length]} cursor="pointer" />
                   ))}
                 </Bar>
               </BarChart>
@@ -197,9 +227,10 @@ export function DashboardPage() {
 
         {/* Topic Breakdown */}
         <Card>
-          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-4)' }}>
+          <h4 style={{ fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-1)' }}>
             By Topic
           </h4>
+          <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)' }}>Click a bar to view entries</p>
           {(trends?.topicBreakdown || []).length === 0 ? (
             <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--font-size-sm)' }}>
               No data yet
@@ -210,9 +241,9 @@ export function DashboardPage() {
                 <XAxis type="number" tick={{ fontSize: 11, fill: '#A0A0A0' }} allowDecimals={false} />
                 <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: '#A0A0A0' }} width={110} />
                 <Tooltip contentStyle={{ backgroundColor: '#2A2A2A', border: '1px solid #3A3A3A', borderRadius: 8, color: '#E8E5E0' }} />
-                <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                <Bar dataKey="count" radius={[0, 4, 4, 0]} onClick={handleTopicClick} style={{ cursor: 'pointer' }}>
                   {(trends?.topicBreakdown || []).map((item: any, i: number) => (
-                    <Cell key={i} fill={item.color || COLORS[i % COLORS.length]} />
+                    <Cell key={i} fill={item.color || COLORS[i % COLORS.length]} cursor="pointer" />
                   ))}
                 </Bar>
               </BarChart>

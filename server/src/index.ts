@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
 import path from 'path';
 import entriesRouter from './routes/entries';
 import searchRouter from './routes/search';
@@ -7,13 +8,37 @@ import importRouter from './routes/import';
 import dashboardRouter from './routes/dashboard';
 import equipmentRouter from './routes/equipment';
 import topicsRouter from './routes/topics';
+import authRouter from './routes/auth';
+import { requireAuth } from './middleware/auth';
 import { initDb, closeDb } from './db/connection';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+}));
 app.use(express.json({ limit: '10mb' }));
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'kul-fyx-session-secret-2025',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production' && !!process.env.RAILWAY_ENVIRONMENT,
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  },
+}));
+
+// Auth routes (login/logout/check) — no auth required
+app.use('/api/auth', authRouter);
+
+// Protect all other API routes
+app.use('/api', requireAuth);
 
 // API routes
 app.use('/api/entries', entriesRouter);
