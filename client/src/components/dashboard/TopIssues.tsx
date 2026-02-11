@@ -8,7 +8,7 @@ interface TopIssuesProps {
 
 export function TopIssues({ issues }: TopIssuesProps) {
   const navigate = useNavigate();
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <div>
