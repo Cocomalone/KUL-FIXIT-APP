@@ -44,11 +44,11 @@ export function DashboardPage() {
     : '--';
 
   const statCards = [
-    { label: 'Total Entries', value: stats?.total_entries || 0, color: 'var(--color-primary)' },
-    { label: 'Equipment', value: stats?.total_equipment || 0, color: 'var(--color-info)' },
-    { label: 'Topics', value: stats?.total_topics || 0, color: '#A78BFA' },
-    { label: 'Critical Issues', value: stats?.critical_issues || 0, color: '#EF4444' },
-    { label: 'Years Covered', value: yearRange, color: 'var(--color-success)' },
+    { label: 'Total Entries', value: stats?.total_entries || 0, color: 'var(--color-primary)', link: '/browse' },
+    { label: 'Equipment', value: stats?.total_equipment || 0, color: 'var(--color-info)', link: '/equipment' },
+    { label: 'Topics', value: stats?.total_topics || 0, color: '#A78BFA', link: '/browse' },
+    { label: 'Critical Issues', value: stats?.critical_issues || 0, color: '#EF4444', link: '/browse?severity=critical&label=critical' },
+    { label: 'Years Covered', value: yearRange, color: 'var(--color-success)', link: '' },
   ];
 
   // Format yearly data for bar chart
@@ -105,7 +105,12 @@ export function DashboardPage() {
         }}
       >
         {statCards.map((stat) => (
-          <Card key={stat.label} padding="var(--space-5)">
+          <Card
+            key={stat.label}
+            padding="var(--space-5)"
+            hover={!!stat.link}
+            onClick={stat.link ? () => navigate(stat.link) : undefined}
+          >
             <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-1)' }}>
               {stat.label}
             </div>
@@ -116,14 +121,8 @@ export function DashboardPage() {
         ))}
       </div>
 
-      {/* Top Critical & High Severity Issues */}
+      {/* Top Critical & High Severity Issues — collapsible */}
       <Card padding="0" style={{ marginBottom: 'var(--space-6)' }}>
-        <div style={{ padding: 'var(--space-5) var(--space-5) 0' }}>
-          <h3 style={{ fontSize: 'var(--font-size-lg)', fontWeight: 600 }}>Top Critical & High Severity Issues</h3>
-          <p style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', marginTop: 'var(--space-1)' }}>
-            Most important troubleshooting entries by severity
-          </p>
-        </div>
         <TopIssues issues={frequent} />
       </Card>
 
