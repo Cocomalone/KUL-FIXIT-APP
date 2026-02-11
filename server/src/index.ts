@@ -15,6 +15,12 @@ import { initDb, closeDb } from './db/connection';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust Railway's reverse proxy (required for secure cookies behind proxy)
+app.set('trust proxy', 1);
+
+// Health check endpoint (no auth required — Railway pings this)
+app.get('/health', (_req, res) => res.status(200).send('ok'));
+
 app.use(cors({
   origin: true,
   credentials: true,

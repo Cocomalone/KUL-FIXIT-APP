@@ -4,11 +4,11 @@ import * as api from '../../services/api';
 
 const navItems = [
   { path: '/', label: 'Search', icon: 'search' },
+  { path: '/dashboard', label: 'Dashboard', icon: 'chart' },
   { path: '/browse', label: 'Browse', icon: 'list' },
+  { path: '/equipment', label: 'Equipment', icon: 'wrench' },
   { path: '/add', label: 'Add Entry', icon: 'plus' },
   { path: '/import', label: 'Import', icon: 'upload' },
-  { path: '/dashboard', label: 'Dashboard', icon: 'chart' },
-  { path: '/equipment', label: 'Equipment', icon: 'wrench' },
 ];
 
 const icons: Record<string, string> = {
